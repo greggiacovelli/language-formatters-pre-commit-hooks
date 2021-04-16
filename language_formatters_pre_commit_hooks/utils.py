@@ -3,6 +3,7 @@ from __future__ import absolute_import
 from __future__ import print_function
 from __future__ import unicode_literals
 
+import datetime
 import os
 import shutil
 import subprocess  # nosec: disable=B603
@@ -13,10 +14,13 @@ import typing
 import requests
 from six.moves.urllib.parse import urlparse
 
+def current_time():
+    now = datetime.now()
+    return now.strftime("%H:%M:%S")
 
 def run_command(*command):
     # type: (typing.Text) -> typing.Tuple[int, typing.Text]
-    print("[cwd={cwd}] Run command: {command}".format(command=command, cwd=os.getcwd()), file=sys.stderr)
+    print("[time={time}][cwd={cwd}] Run command: {command}".format(command=command, cwd=os.getcwd(), time=current_time()), file=sys.stderr)
     return_code, output = 1, ""
     try:
         return_code, output = (
